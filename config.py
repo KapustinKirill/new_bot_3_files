@@ -23,4 +23,4 @@ EMAIL_HOST_USER = "marya.bot.2023@gmail.com"
 EMAIL_HOST_PASSWORD = "pvggndtzabrxjqyi"
 
 SMTP_SERVER = "smtp.yandex.ru"
-SMTP_PORT = 465  # Yandex использует порт 465 для SSLфы
+SMTP_PORT = 465  # Yandex использует порт 465 для SSLф
