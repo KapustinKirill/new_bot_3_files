@@ -90,19 +90,35 @@ async def process_enter_name(message: types.Message, state: FSMContext):
     await send_file_list(message, state)
 
 
+# async def send_file_list(message: types.Message, state: FSMContext):
+#     with db_session() as db:
+#         files = get_all_files(db)
+#         keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+#         for file in files:
+#             keyboard.add(types.KeyboardButton(file.name))
+#         await message.answer(chose_file, reply_markup=keyboard)
+#         files_data = [file.name for file in files]
+#         print(f"Saving files data: {files_data}")
+#         print(state)
+#         # await state.update_data({"files": files_data})
+#         await state.update_data({"files": {file.id: file.name for file in files}})
+
 async def send_file_list(message: types.Message, state: FSMContext):
     with db_session() as db:
+        # Динамически получаем список файлов каждый раз, когда функция вызывается
         files = get_all_files(db)
+
+        # Создаем клавиатуру с полученными файлами
         keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
         for file in files:
             keyboard.add(types.KeyboardButton(file.name))
-        await message.answer(chose_file, reply_markup=keyboard)
-        files_data = [file.name for file in files]
-        print(f"Saving files data: {files_data}")
-        print(state)
-        # await state.update_data({"files": files_data})
-        await state.update_data({"files": {file.id: file.name for file in files}})
 
+        # Отправляем сообщение с клавиатурой
+        await message.answer(chose_file, reply_markup=keyboard)
+
+        # Обновляем состояние с новым списком файлов
+        files_data = {file.id: file.name for file in files}
+        await state.update_data({"files": files_data})
 async def process_choose_file(message: types.Message, state: FSMContext):
     # Проверяем, что выбранный файл существует
     user_data = await state.get_data()
