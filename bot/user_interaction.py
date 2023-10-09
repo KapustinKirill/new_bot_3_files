@@ -29,7 +29,7 @@ email_subject = """Материалы от канала PRO Одиночеств
 email_body = """<p>Привет, 
 </p>
     <p>В приложении к этому письму находится  твой подарок</p>"""
-succses_chat_send = "Вот Ваш подарок:"
+succses_chat_send = "Вот Ваш подарок: "
 
 
 def get_full_file_path(file_name):
